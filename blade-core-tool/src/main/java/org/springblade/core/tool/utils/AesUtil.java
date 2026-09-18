@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2018-2028, DreamLu 卢春梦 (qq596392912@gmail.com).
+ * Copyright (c) 2018-2099, DreamLu 卢春梦 (qq596392912@gmail.com).
  * <p>
  * Licensed under the GNU LESSER GENERAL PUBLIC LICENSE 3.0;
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
  */
 package org.springblade.core.tool.utils;
 
-import org.springframework.lang.Nullable;
+import org.jspecify.annotations.Nullable;
 import org.springframework.util.Assert;
 
 import javax.crypto.Cipher;
@@ -145,8 +145,7 @@ public class AesUtil {
 	 * @param aesTextKey 文本密钥
 	 * @return byte[]
 	 */
-	@Nullable
-	public static byte[] decryptFormHex(@Nullable String content, String aesTextKey) {
+	public static byte @Nullable [] decryptFormHex(@Nullable String content, String aesTextKey) {
 		if (StringUtil.isBlank(content)) {
 			return null;
 		}
@@ -187,8 +186,7 @@ public class AesUtil {
 	 * @param aesTextKey 文本密钥
 	 * @return byte[]
 	 */
-	@Nullable
-	public static byte[] decryptFormBase64(@Nullable String content, String aesTextKey) {
+	public static byte @Nullable [] decryptFormBase64(@Nullable String content, String aesTextKey) {
 		if (StringUtil.isBlank(content)) {
 			return null;
 		}

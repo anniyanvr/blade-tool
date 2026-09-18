@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2018-2028, Chill Zhuang 庄骞 (smallchill@163.com).
+ * Copyright (c) 2018-2099, Chill Zhuang 庄骞 (bladejava@qq.com).
  * <p>
  * Licensed under the GNU LESSER GENERAL PUBLIC LICENSE 3.0;
  * you may not use this file except in compliance with the License.
@@ -40,8 +40,8 @@ public interface TokenConstant {
 	String OAUTH_ID = "oauth_id";
 	String CLIENT_ID = "client_id";
 	String LICENSE = "license";
-	String LICENSE_NAME = "powered by blade";
-	String DEFAULT_AVATAR = "https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png";
+	String LICENSE_NAME = "powered by bladex";
+	String DEFAULT_AVATAR = "https://bladex.cn/images/logo-small.png";
 	Integer AUTH_LENGTH = 7;
 
 	/**

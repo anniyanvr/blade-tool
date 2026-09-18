@@ -5,21 +5,23 @@
     <parent>
         <groupId>org.springblade</groupId>
         <artifactId>blade-tool</artifactId>
-        <version>3.7.1</version>
+        <version>${revision}</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>blade-core-test</artifactId>
     <name>${project.artifactId}</name>
-    <version>${blade.tool.version}</version>
     <packaging>jar</packaging>
+
+    <properties>
+        <module.name>org.springblade.blade.core.test</module.name>
+    </properties>
 
     <dependencies>
         <!-- Blade -->
         <dependency>
             <groupId>org.springblade</groupId>
             <artifactId>blade-core-launch</artifactId>
-            <version>${blade.tool.version}</version>
         </dependency>
         <!-- Test -->
         <dependency>

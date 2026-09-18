@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2018-2028, DreamLu 卢春梦 (qq596392912@gmail.com).
+ * Copyright (c) 2018-2099, DreamLu 卢春梦 (qq596392912@gmail.com).
  * <p>
  * Licensed under the GNU LESSER GENERAL PUBLIC LICENSE 3.0;
  * you may not use this file except in compliance with the License.
@@ -16,9 +16,10 @@
 package org.springblade.core.tool.utils;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springblade.core.launch.utils.INetUtil;
 import org.springblade.core.tool.jackson.JsonUtil;
 import org.springframework.http.MediaType;
-import org.springframework.lang.Nullable;
+import org.jspecify.annotations.Nullable;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.RequestAttributes;
@@ -26,16 +27,18 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.method.HandlerMethod;
 
-import javax.servlet.ServletInputStream;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.ServletInputStream;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
+import java.util.Collections;
 import java.util.Enumeration;
+import java.util.List;
 
 
 /**
@@ -125,6 +128,19 @@ public class WebUtil extends org.springframework.web.util.WebUtils {
 	}
 
 	/**
+	 * 获取 RequestUri
+	 *
+	 * @param request HttpServletRequest
+	 * @return {RequestUri}
+	 */
+	public static String getRequestURI(HttpServletRequest request) {
+		if (request == null) {
+			return StringPool.EMPTY;
+		}
+		return request.getRequestURI();
+	}
+
+	/**
 	 * 返回json
 	 *
 	 * @param response HttpServletResponse
@@ -152,7 +168,10 @@ public class WebUtil extends org.springframework.web.util.WebUtils {
 	}
 
 	/**
-	 * 获取ip
+	 * 获取客户端ip
+	 * <p>
+	 * 对端为公网地址时取对端本身；经网关或反向代理进入时沿代理链识别真实客户端，
+	 * 规则见 {@link INetUtil#resolveClientIp}。可信前提是应用端口只从内网可达。
 	 *
 	 * @return {String}
 	 */
@@ -161,7 +180,7 @@ public class WebUtil extends org.springframework.web.util.WebUtils {
 	}
 
 	/**
-	 * 获取ip
+	 * 获取客户端ip
 	 *
 	 * @param request HttpServletRequest
 	 * @return {String}
@@ -169,28 +188,21 @@ public class WebUtil extends org.springframework.web.util.WebUtils {
 	@Nullable
 	public static String getIP(HttpServletRequest request) {
 		Assert.notNull(request, "HttpServletRequest is null");
-		String ip = request.getHeader("X-Requested-For");
-		if (StringUtil.isBlank(ip) || UN_KNOWN.equalsIgnoreCase(ip)) {
-			ip = request.getHeader("X-Forwarded-For");
-		}
-		if (StringUtil.isBlank(ip) || UN_KNOWN.equalsIgnoreCase(ip)) {
-			ip = request.getHeader("Proxy-Client-IP");
-		}
-		if (StringUtil.isBlank(ip) || UN_KNOWN.equalsIgnoreCase(ip)) {
-			ip = request.getHeader("WL-Proxy-Client-IP");
-		}
-		if (StringUtil.isBlank(ip) || UN_KNOWN.equalsIgnoreCase(ip)) {
-			ip = request.getHeader("HTTP_CLIENT_IP");
-		}
-		if (StringUtil.isBlank(ip) || UN_KNOWN.equalsIgnoreCase(ip)) {
-			ip = request.getHeader("HTTP_X_FORWARDED_FOR");
-		}
-		if (StringUtil.isBlank(ip) || UN_KNOWN.equalsIgnoreCase(ip)) {
-			ip = request.getRemoteAddr();
-		}
-		return StringUtil.isBlank(ip) ? null : ip.split(",")[0];
+		return INetUtil.resolveClientIp(request.getRemoteAddr(),
+			getHeaderValues(request, INetUtil.X_REAL_IP), getHeaderValues(request, INetUtil.X_FORWARDED_FOR));
 	}
 
+	/**
+	 * 获取同名请求头的全部头行，按到达顺序排列
+	 *
+	 * @param request HttpServletRequest
+	 * @param name    请求头名称
+	 * @return 头行列表，没有该请求头时为空列表
+	 */
+	private static List<String> getHeaderValues(HttpServletRequest request, String name) {
+		Enumeration<String> values = request.getHeaders(name);
+		return values == null ? Collections.emptyList() : Collections.list(values);
+	}
 
 	/***
 	 * 获取 request 中 json 字符串的内容

@@ -1,0 +1,11 @@
+#springdoc-openapi项目配置
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    # 接口与分组顺序均由 @ApiOrder 控制,故不设 operations-sorter / tags-sorter
+    persist-authorization: true
+  api-docs:
+    enabled: true
+    path: /v3/api-docs
+  # 默认是false，需要设置为true
+  default-flat-param-object: true

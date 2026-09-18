@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2018-2028, Chill Zhuang 庄骞 (smallchill@163.com).
+ * Copyright (c) 2018-2099, Chill Zhuang 庄骞 (bladejava@qq.com).
  * <p>
  * Licensed under the GNU LESSER GENERAL PUBLIC LICENSE 3.0;
  * you may not use this file except in compliance with the License.
@@ -15,10 +15,13 @@
  */
 package org.springblade.core.secure;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
+import java.io.Serial;
 import java.io.Serializable;
+
+import static io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY;
 
 /**
  * 用户实体
@@ -28,47 +31,48 @@ import java.io.Serializable;
 @Data
 public class BladeUser implements Serializable {
 
+	@Serial
 	private static final long serialVersionUID = 1L;
 	/**
 	 * 客户端id
 	 */
-	@ApiModelProperty(hidden = true)
+	@Schema(accessMode = READ_ONLY)
 	private String clientId;
 
 	/**
 	 * 用户id
 	 */
-	@ApiModelProperty(hidden = true)
+	@Schema(accessMode = READ_ONLY)
 	private Long userId;
 	/**
 	 * 租户ID
 	 */
-	@ApiModelProperty(hidden = true)
+	@Schema(accessMode = READ_ONLY)
 	private String tenantId;
 	/**
 	 * 部门id
 	 */
-	@ApiModelProperty(hidden = true)
+	@Schema(accessMode = READ_ONLY)
 	private String deptId;
 	/**
 	 * 昵称
 	 */
-	@ApiModelProperty(hidden = true)
+	@Schema(accessMode = READ_ONLY)
 	private String userName;
 	/**
 	 * 账号
 	 */
-	@ApiModelProperty(hidden = true)
+	@Schema(accessMode = READ_ONLY)
 	private String account;
 	/**
 	 * 角色id
 	 */
-	@ApiModelProperty(hidden = true)
+	@Schema(accessMode = READ_ONLY)
 	private String roleId;
 	/**
 	 * 角色名
 	 */
-	@ApiModelProperty(hidden = true)
+	@Schema(accessMode = READ_ONLY)
 	private String roleName;
 
 }

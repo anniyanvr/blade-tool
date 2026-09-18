@@ -5,15 +5,18 @@
     <parent>
         <groupId>org.springblade</groupId>
         <artifactId>blade-tool</artifactId>
-        <version>3.7.1</version>
+        <version>${revision}</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>blade-core-boot</artifactId>
     <name>${project.artifactId}</name>
-    <version>${blade.tool.version}</version>
     <packaging>jar</packaging>
+
+    <properties>
+        <module.name>org.springblade.blade.core.boot</module.name>
+    </properties>
 
     <dependencies>
         <!--Spring-->
@@ -35,73 +38,67 @@
         <dependency>
             <groupId>org.springblade</groupId>
             <artifactId>blade-core-launch</artifactId>
-            <version>${blade.tool.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springblade</groupId>
             <artifactId>blade-core-cloud</artifactId>
-            <version>${blade.tool.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springblade</groupId>
             <artifactId>blade-core-tool</artifactId>
-            <version>${blade.tool.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springblade</groupId>
             <artifactId>blade-core-secure</artifactId>
-            <version>${blade.tool.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springblade</groupId>
-            <artifactId>blade-core-log</artifactId>
-            <version>${blade.tool.version}</version>
+            <artifactId>blade-starter-cache</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springblade</groupId>
-            <artifactId>blade-core-swagger</artifactId>
-            <version>${blade.tool.version}</version>
+            <artifactId>blade-starter-log</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springblade</groupId>
+            <artifactId>blade-starter-swagger</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springblade</groupId>
+            <artifactId>blade-starter-tenant</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springblade</groupId>
+            <artifactId>blade-starter-redis</artifactId>
         </dependency>
         <!--MyBatis-->
         <dependency>
             <groupId>org.springblade</groupId>
-            <artifactId>blade-core-mybatis</artifactId>
-            <version>${blade.tool.version}</version>
+            <artifactId>blade-starter-mybatis</artifactId>
         </dependency>
         <dependency>
             <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-boot-starter</artifactId>
-            <version>${mybatis.plus.version}</version>
+            <artifactId>mybatis-plus-spring-boot4-starter</artifactId>
         </dependency>
         <dependency>
             <groupId>org.mybatis</groupId>
             <artifactId>mybatis-typehandlers-jsr310</artifactId>
-            <version>1.0.2</version>
         </dependency>
         <!-- Ehcache -->
         <dependency>
             <groupId>net.sf.ehcache</groupId>
             <artifactId>ehcache</artifactId>
-            <version>2.10.5</version>
         </dependency>
         <!-- Druid -->
         <dependency>
             <groupId>com.alibaba</groupId>
-            <artifactId>druid-spring-boot-starter</artifactId>
-            <version>1.2.19</version>
+            <artifactId>druid-spring-boot-4-starter</artifactId>
         </dependency>
         <!-- MySQL -->
         <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>8.0.32</version>
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>
         </dependency>
-        <!-- PostgreSql -->
-        <!--<dependency>
-            <groupId>org.postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <scope>runtime</scope>
-        </dependency>-->
     </dependencies>
 
 </project>

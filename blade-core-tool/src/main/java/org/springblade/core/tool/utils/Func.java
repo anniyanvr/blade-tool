@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2018-2028, DreamLu 卢春梦 (qq596392912@gmail.com).
+ * Copyright (c) 2018-2099, DreamLu 卢春梦 (qq596392912@gmail.com).
  * <p>
  * Licensed under the GNU LESSER GENERAL PUBLIC LICENSE 3.0;
  * you may not use this file except in compliance with the License.
@@ -22,7 +22,7 @@ import org.springblade.core.tool.jackson.JsonUtil;
 import org.springframework.beans.BeansException;
 import org.springframework.core.MethodParameter;
 import org.springframework.core.annotation.AnnotatedElementUtils;
-import org.springframework.lang.Nullable;
+import org.jspecify.annotations.Nullable;
 import org.springframework.util.StringUtils;
 import org.springframework.web.method.HandlerMethod;
 
@@ -268,7 +268,7 @@ public class Func {
 	 * @param array the array to check
 	 * @return 数组是否为空
 	 */
-	public static boolean isEmpty(@Nullable Object[] array) {
+	public static boolean isEmpty(Object @Nullable [] array) {
 		return ObjectUtil.isEmpty(array);
 	}
 
@@ -278,7 +278,7 @@ public class Func {
 	 * @param array 数组
 	 * @return 数组是否不为空
 	 */
-	public static boolean isNotEmpty(@Nullable Object[] array) {
+	public static boolean isNotEmpty(Object @Nullable [] array) {
 		return ObjectUtil.isNotEmpty(array);
 	}
 
@@ -348,7 +348,7 @@ public class Func {
 	 * @param <T>     The generic tag
 	 * @return {@code true} if found, {@code false} else
 	 */
-	public static <T> boolean contains(@Nullable T[] array, final T element) {
+	public static <T> boolean contains(T @Nullable [] array, final T element) {
 		return CollectionUtil.contains(array, element);
 	}
 
@@ -724,6 +724,32 @@ public class Func {
 	 */
 	public static List<Long> toLongList(String split, String str) {
 		return Arrays.asList(toLongArray(split, str));
+	}
+
+	/**
+	 * 获取第一位Long数值
+	 *
+	 * @param str 被转换的值
+	 * @return 结果
+	 */
+	public static Long firstLong(String str) {
+		return firstLong(",", str);
+	}
+
+	/**
+	 * 获取第一位Long数值
+	 *
+	 * @param split 分隔符
+	 * @param str   被转换的值
+	 * @return 结果
+	 */
+	public static Long firstLong(String split, String str) {
+		List<Long> longs = toLongList(split, str);
+		if (isEmpty(longs)) {
+			return null;
+		} else {
+			return longs.get(0);
+		}
 	}
 
 	/**
@@ -1491,7 +1517,7 @@ public class Func {
 	 * @return T
 	 */
 	public static <T> T copy(Object source, Class<T> clazz) {
-		return BeanUtil.copy(source, clazz);
+		return BeanUtil.copyProperties(source, clazz);
 	}
 
 	/**
@@ -1503,7 +1529,7 @@ public class Func {
 	 * @param targetBean 需要赋值的对象
 	 */
 	public static void copy(Object source, Object targetBean) {
-		BeanUtil.copy(source, targetBean);
+		BeanUtil.copyProperties(source, targetBean);
 	}
 
 	/**

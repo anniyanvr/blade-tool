@@ -1,78 +1,137 @@
- <p align="center">
+<p align="center">
+  <img src="https://img.shields.io/badge/Release-V5.0.2-blue.svg" alt="Downloads">
+  <img src="https://img.shields.io/badge/JDK-21+-green.svg" alt="Build Status">
   <img src="https://img.shields.io/badge/license-LGPL%20v3-blue.svg" alt="Build Status">
-   <img src="https://img.shields.io/badge/Spring%20Cloud-2021-blue.svg" alt="Coverage Status">
-   <img src="https://img.shields.io/badge/Spring%20Boot-2.7.10-blue.svg" alt="Downloads">
- </p>  
+  <img src="https://img.shields.io/badge/Spring%20Cloud-2025.1-blue.svg" alt="Coverage Status">
+  <img src="https://img.shields.io/badge/Spring%20Boot-4.1-blue.svg" alt="Downloads">
+  <br/>
+  <a target="_blank" href="https://bladex.cn">
+    <img src="https://img.shields.io/badge/Author-Small%20Chill-ff69b4.svg" alt="Downloads">
+  </a>
+  <a target="_blank" href="https://bladex.cn">
+    <img src="https://img.shields.io/badge/Copyright%20-@BladeX-%23ff3f59.svg" alt="Downloads">
+  </a>
+</p>  
 
 ## SpringBlade微服务开发平台
-* 采用前后端分离的模式，前端开源两个框架：[Sword](https://gitee.com/smallc/Sword) (基于 React、Ant Design)、[Saber](https://gitee.com/smallc/Saber) (基于 Vue、Element-UI)
-* 后端采用SpringCloud全家桶，并同时对其基础组件做了高度的封装，单独开源出一个框架：[BladeTool](https://github.com/chillzhuang/blade-tool)
+* 采用前后端分离的模式，前端架构 [Saber](https://gitee.com/smallc/Saber) (基于 Vue3、Element-Plus)
+* 后端采用SpringCloud全家桶，并同时对其基础组件做了高度的封装，单独开源出一个框架：[BladeTool](https://gitee.com/smallc/blade-tool)
 * [BladeTool](https://github.com/chillzhuang/blade-tool)已推送至Maven中央库，直接引入即可，减少了工程的臃肿，也可更注重于业务开发
 * 集成Sentinel从流量控制、熔断降级、系统负载等多个维度保护服务的稳定性。
 * 注册中心、配置中心选型Nacos，为工程瘦身的同时加强各模块之间的联动。
-* 使用Traefik进行反向代理，监听后台变化自动化应用新的配置文件。
 * 极简封装了多租户底层，用更少的代码换来拓展性更强的SaaS多租户系统。
-* 借鉴OAuth2，实现了多终端认证系统，可控制子系统的token权限互相隔离。
-* 借鉴Security，封装了Secure模块，采用JWT做Token认证，可拓展集成Redis等细颗粒度控制方案。
-* 稳定生产了一年，经历了从 Camden -> Hoxton -> 2021 的技术架构，也经历了从fat jar -> docker -> k8s + jenkins的部署架构
+* 借鉴OAuth2，自研多终端认证系统，可控制子系统的token权限互相隔离。
+* 借鉴Security，自研Secure模块，采用JWT做Token认证，可拓展集成Redis等细颗粒度控制方案。
+* 稳定生产了九年，经历了从 Camden -> Hoxton -> 2025 的技术架构，也经历了从fat jar -> docker -> k8s + jenkins的部署架构。
 * 项目分包明确，规范微服务的开发模式，使包与包之间的分工清晰。
 
 ## 架构图
-<img src="https://gitee.com/smallc/SpringBlade/raw/master/pic/springblade-framework.png"/>
+<img src="https://xbladex.oss-cn-hangzhou.aliyuncs.com/upload/springblade-framework.png"/>
+
+## 核心技术栈
+
+| 技术栈                  | 版本         |
+|----------------------|------------|
+| Java                 | 21+        |
+| NodeJS               | 18+        |
+| Spring               | 7.0.8      |
+| Spring Boot          | 4.1.0      |
+| Spring Cloud         | 2025.1.2   |
+| Spring Cloud Alibaba | 2025.1.0.0 |
+| Nacos Alibaba        | 3.2.2      |
+| Mybatis Plus         | 3.5.17     |
+
 
 ## 工程结构
 ``` 
 blade-tool
-├── blade-core-boot -- 业务包综合模块
-├── blade-core-cloud -- cloud封装模块
-├── blade-core-datascope -- 数据权限封装模块
-├── blade-core-develop -- 代码生成封装模块
-├── blade-core-launch -- 基础启动模块
-├── blade-core-loadbalancer -- 灰度服务封装模块
-├── blade-core-log -- 日志封装模块 
-├── blade-core-mybatis -- mybatis拓展封装模块 
-├── blade-core-oss -- 对象存储封装模块 
-├── blade-core-report -- 报表封装模块 
-├── blade-core-secure -- 安全封装模块 
-├── blade-core-social -- 第三方登录封装模块 
-├── blade-core-swagger -- swagger拓展封装模块 
-├── blade-core-test -- 单元测试封装模块 
-├── blade-core-tool -- 单元测试封装模块 
-└── blade-core-transaction -- 分布式事物封装模块 
+├── blade-core-bom         -- Maven依赖管理模块
+├── blade-core-boot        -- 业务包综合模块，集成常用功能的快速启动包
+├── blade-core-cloud       -- Spring Cloud微服务封装模块 
+├── blade-core-launch      -- 基础启动模块，提供应用启动的核心功能
+├── blade-core-secure      -- 安全认证封装模块，JWT Token、权限控制等
+├── blade-core-test        -- 单元测试封装模块，集成测试工具和配置
+├── blade-core-tool        -- 核心工具封装模块，通用工具类、常量、配置等
+├── blade-starter-api-crypto    -- API接口加密解密模块
+├── blade-starter-cache         -- 缓存抽象封装模块
+├── blade-starter-datascope     -- 数据权限封装模块，支持行级权限控制
+├── blade-starter-develop       -- 代码生成封装模块，支持多种模板生成
+├── blade-starter-excel         -- Excel导入导出封装模块
+├── blade-starter-i18n          -- I18n国际化封装模块
+├── blade-starter-loadbalancer  -- 负载均衡与灰度发布封装模块
+├── blade-starter-log           -- 日志封装模块，统一日志处理和存储 
+├── blade-starter-mybatis       -- MyBatis Plus增强封装模块
+├── blade-starter-oss           -- 对象存储封装模块，支持多种云存储
+├── blade-starter-redis         -- Redis缓存封装模块，提供缓存操作工具
+├── blade-starter-report        -- 报表封装模块，支持多种报表生成
+├── blade-starter-social        -- 第三方登录封装模块，OAuth2社交登录
+├── blade-starter-swagger       -- Swagger文档封装模块，API文档自动生成
+├── blade-starter-tenant        -- 多租户封装模块，SaaS多租户支持
+└── blade-starter-transaction   -- 分布式事务封装模块，Seata分布式事务
 ```
 
 ## 官方信息
-* 官网地址：[https://bladex.vip](https://bladex.vip)
-* 问答社区：[https://sns.bladex.vip](https://sns.bladex.vip)
-* 会员计划：[SpringBlade会员计划](https://gitee.com/smallc/SpringBlade/wikis/SpringBlade会员计划)
-* 交流一群：`477853168`(满)
-* 交流二群：`751253339`(满)
-* 交流三群：`784729540`(满)
-* 交流四群：`1034621754`(满)
-* 交流五群：`946350912`(满)
-* 交流六群：`511624269`(满)
-* 交流七群：`298061704`
 
-## 在线演示
-* Saber-基于Vue：[https://saber.bladex.vip](https://saber.bladex.vip)
-* Sword-基于React：[https://sword.bladex.vip](https://sword.bladex.vip)
+| 简介   | 内容                                                                            |
+|------|-------------------------------------------------------------------------------|
+| 官网地址 | [https://bladex.cn](https://bladex.cn)                                        |
+| 问答社区 | [https://sns.bladex.cn](https://sns.bladex.cn)                                |
+| 会员计划 | [SpringBlade会员计划](https://gitee.com/smallc/SpringBlade/wikis/SpringBlade会员计划) |
+| 交流一群 | `477853168` (满)                                                               |
+| 交流二群 | `751253339` (满)                                                               |
+| 交流三群 | `784729540` (满)                                                               |
+| 交流四群 | `1034621754` (满)                                                              |
+| 交流五群 | `946350912` (满)                                                               |
+| 交流六群 | `511624269` (满)                                                               |
+| 交流七群 | `298061704` (满)                                                               |
+| 交流八群 | `1078507904`                                                                  |
 
-## 数据大屏
-* 数据大屏展示系统：[https://data.bladex.vip](https://data.bladex.vip)
+## 官方产品
+
+| 简介              | 演示地址                                                 |
+|-----------------|------------------------------------------------------|
+| BladeX企业级开发平台   | [https://saber3.bladex.cn](https://saber3.bladex.cn) |
+| BladeX可视化数据大屏   | [https://data.bladex.cn](https://data.bladex.cn)     |
+| BladeX物联网开发平台   | [https://iot.bladex.cn](https://iot.bladex.cn)       |
+| BladeXAI大模型平台 | [https://ai.bladex.cn/](https://ai.bladex.cn/)      |
+
+## 前端项目
+
+| 简介                 | 地址                                                                           |
+|--------------------|------------------------------------------------------------------------------|
+| 前端框架Saber3(基于Vue3) | [https://gitee.com/smallc/Saber3](https://gitee.com/smallc/Saber)            |
+| 前端框架Saber(基于Vue2)  | [https://gitee.com/smallc/Saber2](https://gitee.com/smallc/Saber/tree/vue2/) |
+| 前端框架Sword(基于React) | [https://gitee.com/smallc/Sword](https://gitee.com/smallc/Sword)             |
+
+## 后端项目
+| 简介            | 地址                                                                                                 |
+|---------------|----------------------------------------------------------------------------------------------------|
+| 核心框架项目地址      | [https://gitee.com/smallc/blade-tool](https://gitee.com/smallc/blade-tool)                         |
+| 后端Gitee地址     | [https://gitee.com/smallc/SpringBlade](https://gitee.com/smallc/SpringBlade)                       |
+| 后端Github地址    | [https://github.com/chillzhuang/SpringBlade](https://github.com/chillzhuang/SpringBlade)           |
+| 后端SpringBoot版 | [https://gitee.com/smallc/SpringBlade/tree/boot/](https://gitee.com/smallc/SpringBlade/tree/boot/) |
+
+## 安全手册
+| 简介        | 地址                                                                                                 |
+|-----------|----------------------------------------------------------------------------------------------------|
+| Blade安全手册 | [https://www.kancloud.cn/smallchill/blade-safety](https://www.kancloud.cn/smallchill/blade-safety) |
 
 ## 技术文档
-* [SpringBlade开发手册一览](https://gitee.com/smallc/SpringBlade/wikis/SpringBlade开发手册)
-* [SpringBlade常见问题集锦](https://sns.bladex.vip/article-14966.html)
-* [SpringBlade基于Kuboard部署K8S](https://kuboard.cn/learning/k8s-practice/spring-blade/)
 
-## 项目地址
-* 核心框架项目地址：[https://gitee.com/smallc/blade-tool](https://gitee.com/smallc/blade-tool)
-* 后端Gitee地址：[https://gitee.com/smallc/SpringBlade](https://gitee.com/smallc/SpringBlade)
-* 后端Github地址：[https://github.com/chillzhuang/SpringBlade](https://github.com/chillzhuang/SpringBlade)
-* 后端SpringBoot版：[https://gitee.com/smallc/SpringBlade/tree/boot/](https://gitee.com/smallc/SpringBlade/tree/boot/)
-* 前端框架Sword(基于React)：[https://gitee.com/smallc/Sword](https://gitee.com/smallc/Sword)
-* 前端框架Saber(基于Vue2)：[https://gitee.com/smallc/Saber](https://gitee.com/smallc/Saber)
-* 前端框架Saber3(基于Vue3)：[https://gitee.com/smallc/Saber3](https://gitee.com/smallc/Saber/tree/3.x/)
+| 简介                        | 地址                                                                                                                       |
+|---------------------------|--------------------------------------------------------------------------------------------------------------------------|
+| SpringBlade开发手册一览         | [https://gitee.com/smallc/SpringBlade/wikis/SpringBlade开发手册](https://gitee.com/smallc/SpringBlade/wikis/SpringBlade开发手册) |
+| SpringBlade常见问题集锦         | [https://sns.bladex.cn/article-14966.html](https://sns.bladex.cn/article-14966.html)                                     |
+| SpringBlade基于Rainbond部署   | [https://www.rainbond.com/docs/micro-service/example/blade](https://www.rainbond.com/docs/micro-service/example/blade)   |
+
+
+## 免费公开课
+<table>
+    <tr>
+        <td><a href="https://space.bilibili.com/525525/channel/seriesdetail?sid=2740449" target="_blank"><img style="width: 300px; height: 170px" src="https://xbladex.oss-cn-hangzhou.aliyuncs.com/upload/springblade-course.jpg"/></a></td>
+        <td><img style="width: 300px; height: 170px" src="https://xbladex.oss-cn-hangzhou.aliyuncs.com/upload/springblade-bilibili.jpg"/></td>
+    </tr>
+</table>
 
 ## 开源协议
 LGPL（[GNU Lesser General Public License](http://www.gnu.org/licenses/lgpl.html)）
@@ -87,94 +146,3 @@ LGPL是GPL的一个为主要为类库使用设计的开源协议。和GPL要求�
 * 对未经过授权和不遵循 LGPL 协议二次开源或者商业化我们将追究到底。
 * 参考请注明：参考自 mica：https://github.com/lets-mica/mica ，blade-tool：https://github.com/chillzhuang/blade-tool 。另请遵循 LGPL 协议。
 * `注意`：若禁止条款被发现有权追讨 **19999** 的授权费。
-
-# 界面
-
-## [BladeX](https://bladex.vip/#/vip) 工作流一览
-<table>
-    <tr>
-        <td><img src="https://gitee.com/smallc/SpringBlade/raw/master/pic/bladex-flow1.png"/></td>
-        <td><img src="https://gitee.com/smallc/SpringBlade/raw/master/pic/bladex-flow2.png"/></td>
-    </tr>
-    <tr>
-        <td><img src="https://gitee.com/smallc/SpringBlade/raw/master/pic/bladex-flow3.png"/></td>
-        <td><img src="https://gitee.com/smallc/SpringBlade/raw/master/pic/bladex-flow4.png"/></td>
-    </tr>
-    <tr>
-        <td><img src="https://gitee.com/smallc/SpringBlade/raw/master/pic/bladex-flow5.png"/></td>
-        <td><img src="https://gitee.com/smallc/SpringBlade/raw/master/pic/bladex-flow6.png"/></td>
-    </tr>
-</table>
-
-## [Sword](https://gitee.com/smallc/Sword) 界面一览
-<table>
-    <tr>
-        <td><img src="https://gitee.com/smallc/SpringBlade/raw/master/pic/sword-main.png"/></td>
-        <td><img src="https://gitee.com/smallc/SpringBlade/raw/master/pic/sword-menu.png"/></td>
-    </tr>
-    <tr>
-        <td><img src="https://gitee.com/smallc/SpringBlade/raw/master/pic/sword-menu-edit.png"/></td>
-        <td><img src="https://gitee.com/smallc/SpringBlade/raw/master/pic/sword-menu-icon.png"/></td>
-    </tr>
-    <tr>
-        <td><img src="https://gitee.com/smallc/SpringBlade/raw/master/pic/sword-role.png"/></td>
-        <td><img src="https://gitee.com/smallc/SpringBlade/raw/master/pic/sword-user.png"/></td>
-    </tr>
-    <tr>
-        <td><img src="https://gitee.com/smallc/SpringBlade/raw/master/pic/sword-dict.png "/></td>
-        <td><img src="https://gitee.com/smallc/SpringBlade/raw/master/pic/sword-log.png"/></td>
-    </tr>
-    <tr>
-        <td><img src="https://gitee.com/smallc/SpringBlade/raw/master/pic/sword-locale-cn.png"/></td>
-        <td><img src="https://gitee.com/smallc/SpringBlade/raw/master/pic/sword-locale-us.png"/></td>
-    </tr>
-</table>
-
-## [Saber](https://gitee.com/smallc/Saber) 界面一览
-<table>
-    <tr>
-        <td><img src="https://gitee.com/smallc/SpringBlade/raw/master/pic/saber-user.png"/></td>
-        <td><img src="https://gitee.com/smallc/SpringBlade/raw/master/pic/saber-role.png"/></td>
-    </tr>
-    <tr>
-        <td><img src="https://gitee.com/smallc/SpringBlade/raw/master/pic/saber-dict.png"/></td>
-        <td><img src="https://gitee.com/smallc/SpringBlade/raw/master/pic/saber-dict-select.png"/></td>
-    </tr>
-    <tr>
-        <td><img src="https://gitee.com/smallc/SpringBlade/raw/master/pic/saber-log.png"/></td>
-        <td><img src="https://gitee.com/smallc/SpringBlade/raw/master/pic/saber-code.png"/></td>
-    </tr>
-</table>
-
-## 监控界面一览
-<table>
-    <tr>
-        <td><img src="https://gitee.com/smallc/SpringBlade/raw/master/pic/springblade-k8s1.png"/></td>
-        <td><img src="https://gitee.com/smallc/SpringBlade/raw/master/pic/springblade-k8s2.png"/></td>
-    </tr>
-    <tr>
-        <td><img src="https://gitee.com/smallc/SpringBlade/raw/master/pic/springblade-grafana.png"/></td>
-        <td><img src="https://gitee.com/smallc/SpringBlade/raw/master/pic/springblade-harbor.png"/></td>
-    </tr>
-    <tr>
-        <td><img src="https://gitee.com/smallc/SpringBlade/raw/master/pic/springblade-traefik.png"/></td>
-        <td><img src="https://gitee.com/smallc/SpringBlade/raw/master/pic/springblade-traefik-health.png"/></td>
-    </tr>
-    <tr>
-        <td><img src="https://gitee.com/smallc/SpringBlade/raw/master/pic/springblade-nacos.png"/></td>
-        <td><img src="https://gitee.com/smallc/SpringBlade/raw/master/pic/springblade-sentinel.png"/></td>
-    </tr>
-    <tr>
-        <td><img src="https://gitee.com/smallc/SpringBlade/raw/master/pic/springblade-admin1.png"/></td>
-        <td><img src="https://gitee.com/smallc/SpringBlade/raw/master/pic/springblade-admin2.png"/></td>
-    </tr>
-    <tr>
-        <td><img src="https://gitee.com/smallc/SpringBlade/raw/master/pic/springblade-swagger1.png"/></td>
-        <td><img src="https://gitee.com/smallc/SpringBlade/raw/master/pic/springblade-swagger2.png"/></td>
-    </tr>
-</table>
-
-## 鸣谢
-* mica（[Mica](https://github.com/lets-mica/mica)）
-* 如梦技术（[DreamLu](https://www.dreamlu.net/)）
-* avue（[avue](https://avuejs.com/)）

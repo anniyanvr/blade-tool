@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2018-2028, Chill Zhuang 庄骞 (smallchill@163.com).
+ * Copyright (c) 2018-2099, Chill Zhuang 庄骞 (bladejava@qq.com).
  * <p>
  * Licensed under the GNU LESSER GENERAL PUBLIC LICENSE 3.0;
  * you may not use this file except in compliance with the License.
@@ -22,6 +22,7 @@ import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 链式map
@@ -50,6 +51,51 @@ public class Kv extends LinkedCaseInsensitiveMap<Object> {
 	 */
 	public static Kv create() {
 		return new Kv();
+	}
+
+
+	/**
+	 * 创建Kv
+	 *
+	 * @param value 初始化数据
+	 * @return Kv
+	 */
+	public static Kv create(Kv value) {
+		Kv kv = new Kv();
+		kv.putAll(value);
+		return kv;
+	}
+
+	/**
+	 * 从Map创建Kv
+	 *
+	 * @param map 初始化数据
+	 * @return Kv
+	 */
+	public static Kv create(Map<?, ?> map) {
+		Kv kv = new Kv();
+		if (map != null) {
+			map.forEach((key, value) -> kv.set(String.valueOf(key), value));
+		}
+		return kv;
+	}
+
+	/**
+	 * 从对象创建Kv
+	 *
+	 * @param value 源对象
+	 * @return Kv
+	 */
+	public static Kv create(Object value) {
+		Kv kv = new Kv();
+		if (value != null) {
+			if (value instanceof Map) {
+				return create((Map<?, ?>) value);
+			} else {
+				kv.set("object", value);
+			}
+		}
+		return kv;
 	}
 
 	public static <K, V> HashMap<K, V> newMap() {

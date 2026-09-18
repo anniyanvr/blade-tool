@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2018-2028, Chill Zhuang 庄骞 (smallchill@163.com).
+ * Copyright (c) 2018-2099, Chill Zhuang 庄骞 (bladejava@qq.com).
  * <p>
  * Licensed under the GNU LESSER GENERAL PUBLIC LICENSE 3.0;
  * you may not use this file except in compliance with the License.
@@ -17,11 +17,12 @@ package org.springblade.core.launch.props;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springblade.core.launch.constant.AppConstant;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.EnvironmentAware;
 import org.springframework.core.env.Environment;
 import org.springframework.core.env.EnvironmentCapable;
-import org.springframework.lang.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -198,6 +199,33 @@ public class BladeProperties implements EnvironmentAware, EnvironmentCapable {
 			return Double.parseDouble(value.trim());
 		}
 		return defaultValue;
+	}
+
+	/**
+	 * 是否是开发环境
+	 *
+	 * @return boolean
+	 */
+	public boolean isDev() {
+		return AppConstant.DEV_CODE.equals(getEnv());
+	}
+
+	/**
+	 * 是否是生产环境
+	 *
+	 * @return boolean
+	 */
+	public boolean isProd() {
+		return AppConstant.PROD_CODE.equals(getEnv());
+	}
+
+	/**
+	 * 是否是测试环境
+	 *
+	 * @return boolean
+	 */
+	public boolean isTest() {
+		return AppConstant.TEST_CODE.equals(getEnv());
 	}
 
 	/**

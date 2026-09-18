@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2018-2028, Chill Zhuang 庄骞 (smallchill@163.com).
+ * Copyright (c) 2018-2099, Chill Zhuang 庄骞 (bladejava@qq.com).
  * <p>
  * Licensed under the GNU LESSER GENERAL PUBLIC LICENSE 3.0;
  * you may not use this file except in compliance with the License.
@@ -39,5 +39,20 @@ public class RequestProperties {
 	 * 放行url
 	 */
 	private List<String> skipUrl = new ArrayList<>();
+
+	/**
+	 * 禁用url
+	 */
+	private List<String> blockUrl = new ArrayList<>();
+
+	/**
+	 * 白名单，支持通配符，例如：10.20.0.8*、10.20.0.*
+	 */
+	private List<String> whiteList = new ArrayList<>();
+
+	/**
+	 * 黑名单，支持通配符，例如：10.20.0.8*、10.20.0.*
+	 */
+	private List<String> blackList = new ArrayList<>();
 
 }

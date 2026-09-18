@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2018-2028, Chill Zhuang 庄骞 (smallchill@163.com).
+ * Copyright (c) 2018-2099, Chill Zhuang 庄骞 (bladejava@qq.com).
  * <p>
  * Licensed under the GNU LESSER GENERAL PUBLIC LICENSE 3.0;
  * you may not use this file except in compliance with the License.
@@ -18,8 +18,12 @@ package org.springblade.core.secure.config;
 
 import lombok.AllArgsConstructor;
 import org.springblade.core.secure.aspect.AuthAspect;
+import org.springblade.core.secure.auth.AuthFun;
+import org.springblade.core.secure.handler.BladePermissionHandler;
+import org.springblade.core.secure.handler.IPermissionHandler;
 import org.springblade.core.secure.interceptor.ClientInterceptor;
 import org.springblade.core.secure.interceptor.SecureInterceptor;
+import org.springblade.core.secure.props.BladeAuthProperties;
 import org.springblade.core.secure.props.BladeSecureProperties;
 import org.springblade.core.secure.props.BladeTokenProperties;
 import org.springblade.core.secure.provider.ClientDetailsServiceImpl;
@@ -42,7 +46,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Order
 @AutoConfiguration
 @AllArgsConstructor
-@EnableConfigurationProperties({BladeSecureProperties.class, BladeTokenProperties.class})
+@EnableConfigurationProperties({BladeAuthProperties.class, BladeSecureProperties.class, BladeTokenProperties.class})
 public class SecureConfiguration implements WebMvcConfigurer {
 
 	private final SecureRegistry secureRegistry;
@@ -65,7 +69,13 @@ public class SecureConfiguration implements WebMvcConfigurer {
 
 	@Bean
 	public AuthAspect authAspect() {
-		return new AuthAspect();
+		return new AuthAspect(new AuthFun());
+	}
+
+	@Bean
+	@ConditionalOnMissingBean(IPermissionHandler.class)
+	public IPermissionHandler permissionHandler() {
+		return new BladePermissionHandler(jdbcTemplate);
 	}
 
 	@Bean

@@ -5,31 +5,33 @@
     <parent>
         <artifactId>blade-tool</artifactId>
         <groupId>org.springblade</groupId>
-        <version>3.7.1</version>
+        <version>${revision}</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>blade-core-launch</artifactId>
     <name>${project.artifactId}</name>
-    <version>${blade.tool.version}</version>
     <packaging>jar</packaging>
+
+    <properties>
+        <module.name>org.springblade.blade.core.launch</module.name>
+    </properties>
 
     <dependencies>
         <!--Spring-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-starter-tomcat</artifactId>
-                </exclusion>
-            </exclusions>
+            <artifactId>spring-boot-starter-webmvc</artifactId>
+        </dependency>
+        <!-- jakarta -->
+        <dependency>
+            <groupId>jakarta.servlet</groupId>
+            <artifactId>jakarta.servlet-api</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-undertow</artifactId>
+            <groupId>jakarta.activation</groupId>
+            <artifactId>jakarta.activation-api</artifactId>
         </dependency>
     </dependencies>
 

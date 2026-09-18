@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2018-2028, Chill Zhuang 庄骞 (smallchill@163.com).
+ * Copyright (c) 2018-2099, Chill Zhuang 庄骞 (bladejava@qq.com).
  * <p>
  * Licensed under the GNU LESSER GENERAL PUBLIC LICENSE 3.0;
  * you may not use this file except in compliance with the License.
@@ -15,14 +15,17 @@
  */
 package org.springblade.core.tool.api;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-import lombok.*;
+import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.servlet.http.HttpServletResponse;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import org.springblade.core.tool.constant.BladeConstant;
 import org.springblade.core.tool.utils.ObjectUtil;
-import org.springframework.lang.Nullable;
+import org.jspecify.annotations.Nullable;
 
-import javax.servlet.http.HttpServletResponse;
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Optional;
 
@@ -34,19 +37,20 @@ import java.util.Optional;
 @Getter
 @Setter
 @ToString
-@ApiModel(description = "返回信息")
+@Schema(description = "返回信息")
 @NoArgsConstructor
 public class R<T> implements Serializable {
 
+	@Serial
 	private static final long serialVersionUID = 1L;
 
-	@ApiModelProperty(value = "状态码", required = true)
+	@Schema(description = "状态码")
 	private int code;
-	@ApiModelProperty(value = "是否成功", required = true)
+	@Schema(description = "是否成功")
 	private boolean success;
-	@ApiModelProperty(value = "承载数据")
+	@Schema(description = "承载数据")
 	private T data;
-	@ApiModelProperty(value = "返回消息", required = true)
+	@Schema(description = "返回消息")
 	private String msg;
 
 	private R(IResultCode resultCode) {
@@ -128,6 +132,16 @@ public class R<T> implements Serializable {
 	 */
 	public static <T> R<T> data(int code, T data, String msg) {
 		return new R<>(code, data, data == null ? BladeConstant.DEFAULT_NULL_MESSAGE : msg);
+	}
+
+	/**
+	 * 返回成功
+	 *
+	 * @param <T> 泛型标记
+	 * @return Result
+	 */
+	public static <T> R<T> success() {
+		return new R<>(ResultCode.SUCCESS);
 	}
 
 	/**
@@ -220,6 +234,18 @@ public class R<T> implements Serializable {
 	 */
 	public static <T> R<T> status(boolean flag) {
 		return flag ? success(BladeConstant.DEFAULT_SUCCESS_MESSAGE) : fail(BladeConstant.DEFAULT_FAILURE_MESSAGE);
+	}
+
+	/**
+	 * 根据状态返回成功或者失败
+	 *
+	 * @param status 状态
+	 * @param msg    异常msg
+	 * @param <T>    泛型标记
+	 * @return Result
+	 */
+	public static <T> R<T> status(boolean status, String msg) {
+		return status ? R.success() : R.fail(msg);
 	}
 
 }

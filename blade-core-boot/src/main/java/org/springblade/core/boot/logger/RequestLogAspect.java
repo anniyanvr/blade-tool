@@ -21,8 +21,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import java.io.InputStream;
 import java.lang.reflect.Method;
 import java.util.*;
@@ -166,7 +166,7 @@ public class RequestLogAspect {
 			afterReqArgs.add(requestMethod);
 			afterReqArgs.add(requestURI);
 			afterReqArgs.add(tookMs);
-			afterReqLog.append("================  Response End   ================\n");
+			afterReqLog.append("=================  Response End   ================\n");
 			log.info(afterReqLog.toString(), afterReqArgs.toArray());
 		}
 	}

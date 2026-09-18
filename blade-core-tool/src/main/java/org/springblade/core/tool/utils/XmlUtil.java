@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2018-2028, DreamLu 卢春梦 (qq596392912@gmail.com).
+ * Copyright (c) 2018-2099, DreamLu 卢春梦 (qq596392912@gmail.com).
  * <p>
  * Licensed under the GNU LESSER GENERAL PUBLIC LICENSE 3.0;
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
  */
 package org.springblade.core.tool.utils;
 
-import org.springframework.lang.Nullable;
+import org.jspecify.annotations.Nullable;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -264,8 +264,8 @@ public class XmlUtil {
 	 * 内部类单例
 	 */
 	private static class XmlHelperHolder {
-		private static DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
-		private static XPathFactory xPathFactory = XPathFactory.newInstance();
+		private static final DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+		private static final XPathFactory xPathFactory = XPathFactory.newInstance();
 	}
 
 }

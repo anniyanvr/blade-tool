@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2018-2028, Chill Zhuang 庄骞 (smallchill@163.com).
+ * Copyright (c) 2018-2099, Chill Zhuang 庄骞 (bladejava@qq.com).
  * <p>
  * Licensed under the GNU LESSER GENERAL PUBLIC LICENSE 3.0;
  * you may not use this file except in compliance with the License.
@@ -20,6 +20,7 @@ import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.Data;
 import org.springblade.core.tool.utils.Func;
 
+import java.io.Serial;
 import java.util.Objects;
 
 /**
@@ -30,6 +31,7 @@ import java.util.Objects;
 @Data
 public class TreeNode extends BaseNode<TreeNode> {
 
+	@Serial
 	private static final long serialVersionUID = 1L;
 
 	private String title;

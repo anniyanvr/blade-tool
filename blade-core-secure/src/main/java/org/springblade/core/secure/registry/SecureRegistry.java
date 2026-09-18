@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2018-2028, Chill Zhuang 庄骞 (smallchill@163.com).
+ * Copyright (c) 2018-2099, Chill Zhuang 庄骞 (bladejava@qq.com).
  * <p>
  * Licensed under the GNU LESSER GENERAL PUBLIC LICENSE 3.0;
  * you may not use this file except in compliance with the License.
@@ -37,10 +37,13 @@ public class SecureRegistry {
 
 	public SecureRegistry() {
 		this.defaultExcludePatterns.add("/actuator/health/**");
-		this.defaultExcludePatterns.add("/v2/api-docs/**");
+		this.defaultExcludePatterns.add("/v3/api-docs/**");
+		this.defaultExcludePatterns.add("/swagger-ui/**");
+		this.defaultExcludePatterns.add("/swagger-ui.html");
 		this.defaultExcludePatterns.add("/auth/**");
+		this.defaultExcludePatterns.add("/oauth/**");
 		this.defaultExcludePatterns.add("/token/**");
-		this.defaultExcludePatterns.add("/log/**");
+		this.defaultExcludePatterns.add("/feign/client/**");
 		this.defaultExcludePatterns.add("/user/user-info");
 		this.defaultExcludePatterns.add("/user/user-info-by-id");
 		this.defaultExcludePatterns.add("/menu/auth-routes");

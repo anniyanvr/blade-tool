@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2018-2028, DreamLu 卢春梦 (qq596392912@gmail.com).
+ * Copyright (c) 2018-2099, DreamLu 卢春梦 (qq596392912@gmail.com).
  * <p>
  * Licensed under the GNU LESSER GENERAL PUBLIC LICENSE 3.0;
  * you may not use this file except in compliance with the License.
@@ -15,11 +15,12 @@
  */
 package org.springblade.core.tool.utils;
 
-import org.springframework.lang.Nullable;
+import org.jspecify.annotations.Nullable;
 import org.springframework.util.CollectionUtils;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -37,7 +38,7 @@ public class CollectionUtil extends org.springframework.util.CollectionUtils {
 	 * @param <T>     The generic tag
 	 * @return {@code true} if found, {@code false} else
 	 */
-	public static <T> boolean contains(@Nullable T[] array, final T element) {
+	public static <T> boolean contains(T @Nullable [] array, final T element) {
 		if (array == null) {
 			return false;
 		}
@@ -77,6 +78,28 @@ public class CollectionUtil extends org.springframework.util.CollectionUtils {
 	 */
 	public static boolean isNotEmpty(@Nullable Map<?, ?> map) {
 		return !CollectionUtils.isEmpty(map);
+	}
+
+	/**
+	 * 将key value 数组转为 map
+	 *
+	 * @param keysValues key value 数组
+	 * @param <K>        key
+	 * @param <V>        value
+	 * @return map 集合
+	 */
+	public static <K, V> Map<K, V> toMap(Object... keysValues) {
+		int kvLength = keysValues.length;
+		if (kvLength % 2 != 0) {
+			throw new IllegalArgumentException("wrong number of arguments for met, keysValues length can not be odd");
+		}
+		Map<K, V> keyValueMap = new HashMap<>(kvLength);
+		for (int i = kvLength - 2; i >= 0; i -= 2) {
+			Object key = keysValues[i];
+			Object value = keysValues[i + 1];
+			keyValueMap.put((K) key, (V) value);
+		}
+		return keyValueMap;
 	}
 
 }

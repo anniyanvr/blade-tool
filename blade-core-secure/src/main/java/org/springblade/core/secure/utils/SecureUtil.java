@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2018-2028, Chill Zhuang 庄骞 (smallchill@163.com).
+ * Copyright (c) 2018-2099, Chill Zhuang 庄骞 (bladejava@qq.com).
  * <p>
  * Licensed under the GNU LESSER GENERAL PUBLIC LICENSE 3.0;
  * you may not use this file except in compliance with the License.
@@ -18,7 +18,8 @@ package org.springblade.core.secure.utils;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.SneakyThrows;
 import org.springblade.core.launch.constant.TokenConstant;
 import org.springblade.core.secure.BladeUser;
@@ -31,9 +32,7 @@ import org.springblade.core.secure.provider.IClientDetailsService;
 import org.springblade.core.tool.constant.RoleConstant;
 import org.springblade.core.tool.utils.*;
 
-import javax.crypto.spec.SecretKeySpec;
-import javax.servlet.http.HttpServletRequest;
-import java.security.Key;
+import javax.crypto.SecretKey;
 import java.util.*;
 
 /**
@@ -122,11 +121,30 @@ public class SecureUtil {
 	/**
 	 * 获取用户信息
 	 *
+	 * @param auth auth
+	 * @return BladeUser
+	 */
+	public static BladeUser getUser(String auth) {
+		return getUser(getClaims(auth));
+	}
+
+	/**
+	 * 获取用户信息
+	 *
 	 * @param request request
 	 * @return BladeUser
 	 */
 	public static BladeUser getUser(HttpServletRequest request) {
-		Claims claims = getClaims(request);
+		return getUser(getClaims(request));
+	}
+
+	/**
+	 * 获取用户信息
+	 *
+	 * @param claims Claims
+	 * @return BladeUser
+	 */
+	public static BladeUser getUser(Claims claims) {
 		if (claims == null) {
 			return null;
 		}
@@ -156,7 +174,26 @@ public class SecureUtil {
 	 * @return boolean
 	 */
 	public static boolean isAdministrator() {
-		return StringUtil.containsAny(getUserRole(), RoleConstant.ADMIN);
+		return hasRole(RoleConstant.ADMINISTRATOR);
+	}
+
+	/**
+	 * 是否为管理员
+	 *
+	 * @return boolean
+	 */
+	public static boolean isAdmin() {
+		return hasRole(RoleConstant.ADMIN);
+	}
+
+	/**
+	 * 判定当前会话是否持有指定角色
+	 *
+	 * @param role 角色别名
+	 * @return boolean
+	 */
+	private static boolean hasRole(String role) {
+		return CollectionUtil.contains(Func.toStrArray(getUserRole()), role);
 	}
 
 	/**
@@ -286,6 +323,15 @@ public class SecureUtil {
 	}
 
 	/**
+	 * 是否已授权
+	 *
+	 * @return boolean
+	 */
+	public static boolean hasAuth() {
+		return getUser() != null;
+	}
+
+	/**
 	 * 获取Claims
 	 *
 	 * @param request request
@@ -293,10 +339,20 @@ public class SecureUtil {
 	 */
 	public static Claims getClaims(HttpServletRequest request) {
 		String auth = request.getHeader(SecureUtil.HEADER);
-		String token = getToken(
-			StringUtil.isNotBlank(auth) ? auth : request.getParameter(SecureUtil.HEADER)
-		);
-		return SecureUtil.parseJWT(token);
+		if (StringUtil.isBlank(auth)) {
+			auth = request.getParameter(SecureUtil.HEADER);
+		}
+		return getClaims(auth);
+	}
+
+	/**
+	 * 获取Claims
+	 *
+	 * @param auth auth
+	 * @return Claims
+	 */
+	public static Claims getClaims(String auth) {
+		return SecureUtil.parseJWT(getToken(auth));
 	}
 
 	/**
@@ -370,9 +426,10 @@ public class SecureUtil {
 	 */
 	public static Claims parseJWT(String jsonWebToken) {
 		try {
-			return Jwts.parserBuilder()
-				.setSigningKey(Base64.getDecoder().decode(getBase64Security())).build()
-				.parseClaimsJws(jsonWebToken).getBody();
+			return Jwts.parser()
+				.verifyWith(Keys.hmacShaKeyFor(Base64.getDecoder().decode(getBase64Security()))).build()
+				.parseSignedClaims(jsonWebToken)
+				.getPayload();
 		} catch (Exception ex) {
 			return null;
 		}
@@ -402,20 +459,16 @@ public class SecureUtil {
 			throw new SecureException("客户端认证失败!");
 		}
 
-		SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
-
 		long nowMillis = System.currentTimeMillis();
 		Date now = new Date(nowMillis);
 
-		//生成签名密钥
-		byte[] apiKeySecretBytes = Base64.getDecoder().decode(getBase64Security());
-		Key signingKey = new SecretKeySpec(apiKeySecretBytes, signatureAlgorithm.getJcaName());
+		// 生成签名密钥
+		SecretKey signingKey = Keys.hmacShaKeyFor(Base64.getDecoder().decode(getBase64Security()));
 
-		//添加构成JWT的类
-		JwtBuilder builder = Jwts.builder().setHeaderParam("typ", "JWT")
-			.setIssuer(issuer)
-			.setAudience(audience)
-			.signWith(signingKey);
+		// 添加构成JWT的类
+		JwtBuilder builder = Jwts.builder().header().add("typ", "JWT")
+			.and().issuer(issuer).audience().add(audience)
+			.and().signWith(signingKey);
 
 		//设置JWT参数
 		user.forEach(builder::claim);
@@ -434,12 +487,12 @@ public class SecureUtil {
 		}
 		long expMillis = nowMillis + expireMillis;
 		Date exp = new Date(expMillis);
-		builder.setExpiration(exp).setNotBefore(now);
+		builder.expiration(exp).notBefore(now);
 
 		// 组装Token信息
 		TokenInfo tokenInfo = new TokenInfo();
 		tokenInfo.setToken(builder.compact());
-		tokenInfo.setExpire((int) expireMillis / 1000);
+		tokenInfo.setExpire((int) (expireMillis / 1000));
 
 		return tokenInfo;
 	}

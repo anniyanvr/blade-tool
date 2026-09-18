@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2018-2028, Chill Zhuang 庄骞 (smallchill@163.com).
+ * Copyright (c) 2018-2099, Chill Zhuang 庄骞 (bladejava@qq.com).
  * <p>
  * Licensed under the GNU LESSER GENERAL PUBLIC LICENSE 3.0;
  * you may not use this file except in compliance with the License.
@@ -25,7 +25,7 @@ public interface AppConstant {
 	/**
 	 * 应用版本
 	 */
-	String APPLICATION_VERSION = "3.7.1";
+	String APPLICATION_VERSION = "4.0.0";
 
 	/**
 	 * 基础包
@@ -36,6 +36,10 @@ public interface AppConstant {
 	 * 应用名前缀
 	 */
 	String APPLICATION_NAME_PREFIX = "blade-";
+	/**
+	 * 大模型模块名称
+	 */
+	String APPLICATION_AI_NAME = APPLICATION_NAME_PREFIX + "ai";
 	/**
 	 * 网关模块名称
 	 */
@@ -72,10 +76,6 @@ public interface AppConstant {
 	 * 资源模块名称
 	 */
 	String APPLICATION_RESOURCE_NAME = APPLICATION_NAME_PREFIX + "resource";
-	/**
-	 * 链路追踪模块名称
-	 */
-	String APPLICATION_ZIPKIN_NAME = APPLICATION_NAME_PREFIX + "zipkin";
 	/**
 	 * 报表系统名称
 	 */

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2018-2028, Chill Zhuang 庄骞 (smallchill@163.com).
+ * Copyright (c) 2018-2099, Chill Zhuang 庄骞 (bladejava@qq.com).
  * <p>
  * Licensed under the GNU LESSER GENERAL PUBLIC LICENSE 3.0;
  * you may not use this file except in compliance with the License.
@@ -22,9 +22,13 @@ package org.springblade.core.tool.constant;
  */
 public class RoleConstant {
 
-	public static final String ADMIN = "administrator";
+	public static final String ADMINISTRATOR = "administrator";
 
-	public static final String HAS_ROLE_ADMIN = "hasRole('" + ADMIN + "')";
+	public static final String HAS_ROLE_ADMINISTRATOR = "hasRole('" + ADMINISTRATOR + "')";
+
+	public static final String ADMIN = "admin";
+
+	public static final String HAS_ROLE_ADMIN = "hasAnyRole('" + ADMINISTRATOR + "', '" + ADMIN + "')";
 
 	public static final String USER = "user";
 
